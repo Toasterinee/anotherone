@@ -123,7 +123,7 @@ nav a:hover img {
     .burger {
         display: flex;
     }
-    
+
     .nav-links {
         position: fixed;
         top: 90px;
@@ -167,7 +167,7 @@ nav a:hover img {
         padding: 0 15px;
         height: 70px;
     }
-    
+
     nav a img {
         max-height: 50px;
     }
@@ -700,11 +700,11 @@ main {
         margin: 0 10%;
         padding: 30px;
     }
-    
+
     .name, .phone {
         width: 45%;
     }
-    
+
     .message {
         width: 90%;
     }
@@ -717,20 +717,20 @@ main {
         padding: 20px;
         gap: 20px;
     }
-    
+
     .name, .phone {
         width: 100%;
     }
-    
+
     .message {
         width: 100%;
     }
-    
+
     .checkbox-container {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .checkbox-container label {
         text-align: center;
     }
@@ -742,7 +742,7 @@ main {
         margin: 0 2.5%;
         padding: 15px;
     }
-    
+
     #appForm input[type="submit"] {
         width: 180px;
         height: 45px;
@@ -922,11 +922,11 @@ main {
         margin: 0 5% 60px;
         gap: 30px;
     }
-    
+
     .contacts1 {
         width: 40%;
     }
-    
+
     .map-container {
         width: 55%;
     }
@@ -1120,7 +1120,7 @@ main {
     #about_Us, #odds {
         width: 80%;
     }
-    
+
     .odds {
         width: 45%;
     }
