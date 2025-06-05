@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Инициализация бургер-меню
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('nav');
     const navLinks = document.querySelector('.nav-links');
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.classList.toggle('active');
     });
 
-    // Закрытие меню при клике на ссылку
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             nav.classList.remove('active');
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Инициализация слайдера в хедере
     const initHeaderSlider = () => {
         const sliderDots = document.querySelectorAll('.slider-dot');
         const slides = document.querySelectorAll('.square img');
@@ -70,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startAutoSlide();
     };
 
-    // Инициализация слайдера портфолио
     const initPortfolioSlider = () => {
         const textSlides = document.querySelectorAll('.text-slide');
         const imageSlides = document.querySelectorAll('.image-slide');
@@ -84,12 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isAnimating) return;
             isAnimating = true;
 
-            // Убираем активный класс у текущих слайдов
             textSlides[currentSlide].classList.remove('active');
             imageSlides[currentSlide].classList.remove('active');
             dots[currentSlide].classList.remove('active');
 
-            // Добавляем активный класс новым слайдам
             textSlides[index].classList.add('active');
             imageSlides[index].classList.add('active');
             dots[index].classList.add('active');
@@ -111,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showSlide(prev);
         };
 
-        // Обработчики событий
         prevButton.addEventListener('click', prevSlide);
         nextButton.addEventListener('click', nextSlide);
 
@@ -124,13 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Инициализация слайдеров
     initHeaderSlider();
     initPortfolioSlider();
 
     console.log('DOM fully loaded');
 
-    const form = document.getElementById('appForm'); // Используем appForm как ID формы
+    const form = document.getElementById('appForm');
     if (!form) {
         console.error('Form with ID "appForm" not found');
         return;
@@ -151,9 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Показываем модальное окно и затенение
         overlay.style.display = 'block';
         resultDiv.style.display = 'block';
+        
+        setTimeout(() => {
+            overlay.classList.add('active');
+            resultDiv.classList.add('active');
+        }, 10);
 
         try {
             console.log('Sending fetch request to /submit');
@@ -167,31 +163,42 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Parsed data', data);
 
             if (response.ok) {
-                resultDiv.className = 'modal success';
-                resultDiv.textContent = data.message; // Сообщение об успехе
+                resultDiv.className = 'modal active success';
+                resultDiv.innerHTML = `
+                    <p>${data.message}</p>
+                    <button class="close-btn">Закрыть</button>
+                `;
                 form.reset();
             } else {
-                resultDiv.className = 'modal error';
-                // Извлекаем только сообщения, убирая префиксы полей
+                resultDiv.className = 'modal active error';
                 const messages = data.message.split('; ').map(msg => msg.split(': ')[1] || msg).filter(Boolean);
-                resultDiv.textContent = messages.join('\n'); // Выводим каждую ошибку на новой строке
+                resultDiv.innerHTML = `
+                    <p>${messages.join('<br>')}</p>
+                    <button class="close-btn">Закрыть</button>
+                `;
             }
         } catch (error) {
             console.error('Fetch error', error);
-            resultDiv.className = 'modal error';
-            resultDiv.textContent = 'Ошибка соединения с сервером';
+            resultDiv.className = 'modal active error';
+            resultDiv.innerHTML = `
+                <p>Ошибка соединения с сервером</p>
+                <button class="close-btn">Закрыть</button>
+            `;
         }
 
-        // Добавляем кнопку закрытия
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'close-btn';
-        closeBtn.textContent = 'Закрыть';
-        closeBtn.onclick = () => {
-            resultDiv.style.display = 'none';
-            overlay.style.display = 'none';
-            resultDiv.textContent = '';
-            resultDiv.className = 'modal';
-        };
-        resultDiv.appendChild(closeBtn);
+        const closeBtn = resultDiv.querySelector('.close-btn');
+        if (closeBtn) {
+            closeBtn.onclick = () => {
+                overlay.classList.remove('active');
+                resultDiv.classList.remove('active');
+                
+                setTimeout(() => {
+                    resultDiv.style.display = 'none';
+                    overlay.style.display = 'none';
+                    resultDiv.innerHTML = '';
+                    resultDiv.className = 'modal';
+                }, 300);
+            };
+        }
     });
 });

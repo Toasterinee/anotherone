@@ -92,7 +92,6 @@
             </div>
             <div class="portfolio-slider">
                 <div class="portfolio-content">
-                    <!-- Левая часть с текстом -->
                     <div class="portfolio-text">
                         <div class="text-slide active" data-slide="0">
                             <h4>Kazakov Grand Loft</h4>
@@ -114,8 +113,6 @@
                             <p>Ежедневный пассажиропоток через станции метро и наземный транспорт составляет около 300 тыс. человек. В зоне охвата торгового центра живут и работают более 3 млн человек.</p>
                         </div>
                     </div>
-                    
-                    <!-- Правая часть с изображениями -->
                     <div class="portfolio-images">
                         <div class="image-slide active" data-slide="0">
                             <img src="{{ Staticimages }}/Portimg1.png" alt="Kazakov Grand Loft">
@@ -126,7 +123,6 @@
                         <div class="image-slide" data-slide="2">
                             <img src="{{ Staticimages }}/Portimg3.png" alt="Экстерьерные Работы">
                         </div>
-                        <!-- Контролы слайдера -->
                         <div class="portfolio-controls">
                             <button class="prev-slide">
                                 <img src="{{ Staticimages }}/portarrow1.png" alt="Предыдущий">
@@ -153,14 +149,16 @@
                     <input type="text" placeholder="Ваше имя" id="name" name="full_name" value="{{ form_data.full_name if form_data else '' }}" required>
                 </div>
                 <div class="phone">
-                    <input type="tel" placeholder="Номер телефона" id="phone" name="phone"  value="{{ form_data.phone if form_data else '' }}" required>
+                    <input type="tel" placeholder="Номер телефона" id="phone" name="phone" value="{{ form_data.phone if form_data else '' }}" required>
                 </div>
                 <div class="message">
-                    <textarea id="message" placeholder="Ваше сообщение" name="message" rows="4" cols="50"></textarea><br><br>
+                    <textarea id="message" placeholder="Ваше сообщение" name="message" rows="4" cols="50"></textarea>
+                </div>
+                <div class="checkbox-container">
                     <input type="checkbox" id="confirm" name="agreement" {% if form_data and form_data.agreement %}checked{% endif %} required>
-                    <label for="confirm">Нажимая кнопку "ОТПРАВИТЬ" вы соглашаетесь на обработку ваших персональных данных</label><br><br>
-                    <input type="submit" value="Отправить">
-                    </div>
+                    <label for="confirm">Нажимая кнопку "ОТПРАВИТЬ" вы соглашаетесь на обработку ваших персональных данных</label>
+                </div>
+                <input type="submit" value="ОТПРАВИТЬ">
             </form>
            <div class="overlay" id="overlay"></div>
             <div class="modal" id="result"></div>
@@ -175,24 +173,24 @@
                     <p style="cursor: pointer;"><u>заказать звонок</u></p>
                     <p class="cntcp">Пн-Вс 9:00-20:00</p>
                     <p>без выходных</p>
-                    <br>
-                    <img src="{{ Staticimages }}/vk.png" alt="ВКонтакте">
-                    <img src="{{ Staticimages }}/TG.png" alt="Telegram">
-                    <img src="{{ Staticimages }}/whatsapp.png" alt="What's Up">
+                    <div class="social-icons">
+                        <img src="{{ Staticimages }}/vk.png" alt="ВКонтакте">
+                        <img src="{{ Staticimages }}/TG.png" alt="Telegram">
+                        <img src="{{ Staticimages }}/whatsapp.png" alt="What's Up">
+                    </div>
                     <p class="pol"><u>Политика конфиденциальности</u></p>
                 </div>
-            <div style="position:relative;overflow:hidden;float: right;"><a href="https://yandex.ru/maps/213/moscow/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Москва</a><a href="https://yandex.ru/maps/213/moscow/house/nagorny_proyezd_12bs2/Z04YcAdmT0UDQFtvfXp5d3pjYA==/?indoorLevel=1&ll=37.607095%2C55.686277&utm_medium=mapframe&utm_source=maps&z=16.53" style="color:#eee;font-size:12px;position:absolute;top:14px;">Нагорный проезд, 12Бс2 — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?indoorLevel=1&ll=37.607095%2C55.686277&mode=whatshere&whatshere%5Bpoint%5D=37.606606%2C55.686420&whatshere%5Bzoom%5D=17&z=16.53" width="700" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+                <div class="map-container">
+                    <iframe src="https://yandex.ru/map-widget/v1/?indoorLevel=1&ll=37.607095%2C55.686277&mode=whatshere&whatshere%5Bpoint%5D=37.606606%2C55.686420&whatshere%5Bzoom%5D=17&z=16.53" allowfullscreen="true"></iframe>
+                </div>
             </div>
         </main>
         <footer id="footer">
             <div class="footer-container">
-                <!-- Первая колонка -->
                 <div class="footer-column">
                     <img src="{{ Staticimages }}/logo.png" alt="СитиПро" class="footer-logo">
                     <p class="footer-description">Реставрация (восстановление) лакокрасочного покрытия на объекте (окна, двери), профессиональная окраска на объекте (окна, двери, предметы интерьера и экстерьера, ограждения, витражи и т.д.)</p>
                 </div>
-                
-                <!-- Вторая колонка -->
                 <div class="footer-column">
                     <div class="footer-nav">
                         <a href="#about_Us">О нас</a>
@@ -203,8 +201,6 @@
                         <a href="#" class="privacy-policy">Политика конфиденциальности</a>
                     </div>
                 </div>
-                
-                <!-- Третья колонка -->
                 <div class="footer-column">
                     <div class="footer-contacts">
                         <p class="contact-bold">г. Москва</p>
