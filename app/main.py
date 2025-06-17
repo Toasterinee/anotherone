@@ -12,6 +12,7 @@ from app.schemas import ApplicationForm
 from pydantic import ValidationError
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import secrets
+from fastapi.middleware.cors import CORSMiddleware
 
 security = HTTPBasic()
 
@@ -32,6 +33,14 @@ def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Можно указать конкретный домен для безопасности
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
 
