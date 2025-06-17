@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Заявки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        .btn-delete {
+            color: #dc3545;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            color: #bb2d3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Админ-панель</h1>
+            <p class="lead">Список всех заявок</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ФИО</th>
+                        <th>Телефон</th>
+                        <th>Сообщение</th>
+                        <th>Согласие</th>
+                        <th>Дата создания</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applications %}
+                    <tr id="row-{{ app.id }}">
+                        <td>{{ app.id }}</td>
+                        <td>{{ app.full_name }}</td>
+                        <td>{{ app.phone }}</td>
+                        <td>{{ app.message }}</td>
+                        <td>{{ "Да" if app.agreement else "Нет" }}</td>
+                        <td>{{ app.created_at.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+                        <td>
+                            <button class="btn btn-delete" onclick="deleteApplication({{ app.id }})">
+                                <i class="bi bi-trash"></i> Удалить
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function deleteApplication(id) {
+            if (!confirm('Вы уверены, что хотите удалить эту заявку?')) {
+                return;
+            }
+
+            const url = `http://${window.location.host}/admin/application/${id}`;
+            console.log('Отправка запроса на удаление:', url);  // Отладочная информация
+
+            try {
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('admin:' + '{{ admin_password }}')
+                    }
+                });
+
+                console.log('Статус ответа:', response.status);  // Отладочная информация
+
+                if (response.ok) {
+                    const row = document.getElementById(`row-${id}`);
+                    row.remove();
+                    alert('Заявка успешно удалена');
+                } else {
+                    const data = await response.json();
+                    console.error('Ошибка удаления:', data);  // Отладочная информация
+                    alert('Ошибка при удалении: ' + data.detail);
+                }
+            } catch (error) {
+                console.error('Ошибка при выполнении запроса:', error);  // Отладочная информация
+                alert('Произошла ошибка при удалении заявки');
+            }
+        }
+    </script>
+</body>
+</html> 
