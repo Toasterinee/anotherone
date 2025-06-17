@@ -17,7 +17,7 @@ security = HTTPBasic()
 
 # Константы для базовой аутентификации
 ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "your_secure_password"  # Замените на свой пароль
+ADMIN_PASSWORD = "1234"  # Замените на свой пароль
 
 def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     correct_username = secrets.compare_digest(credentials.username, ADMIN_USERNAME)
